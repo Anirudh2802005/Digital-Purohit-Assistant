@@ -1,0 +1,819 @@
+/* ==========================================
+   DIGITAL PUROHIT CALENDAR
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.calendar-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:25px;
+}
+
+.calendar-header h1{
+
+    font-size:30px;
+    color:#1E3A8A;
+    font-weight:700;
+}
+
+.calendar-header p{
+
+    color:#666;
+    margin-top:6px;
+}
+
+.today-box{
+
+    background:#2563EB;
+    color:#fff;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    font-weight:600;
+
+    box-shadow:0 6px 14px rgba(37,99,235,.2);
+
+}
+
+/* ==========================================
+   TOOLBAR
+========================================== */
+
+.calendar-toolbar{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.nav-btn{
+
+    background:#2563EB;
+    color:#fff;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    font-weight:600;
+}
+
+.nav-btn:hover{
+
+    background:#1D4ED8;
+}
+
+.month-title{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#1E3A8A;
+}
+
+/* ==========================================
+   SEARCH BAR
+========================================== */
+
+.search-bar{
+
+    margin-bottom:25px;
+
+    display:flex;
+
+    justify-content:flex-end;
+}
+
+.search-bar form{
+
+    display:flex;
+
+    gap:10px;
+}
+
+.search-bar input{
+
+    padding:10px 14px;
+
+    border:1px solid #D1D5DB;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+}
+
+.search-bar button{
+
+    background:#10B981;
+
+    color:white;
+
+    border:none;
+
+    padding:10px 18px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+.search-bar button:hover{
+
+    background:#059669;
+}
+
+/* ==========================================
+   CALENDAR
+========================================== */
+
+.calendar-wrapper{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.calendar-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(7,1fr);
+}
+
+/* ==========================================
+   WEEK HEADER
+========================================== */
+
+.day-name{
+
+    background:#1E3A8A;
+
+    color:#fff;
+
+    text-align:center;
+
+    padding:15px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    border:1px solid #E5E7EB;
+}
+
+/* ==========================================
+   DAY CARD
+========================================== */
+
+.day-card{
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    justify-content:flex-start;
+
+    min-height:120px;
+
+    padding:10px;
+
+    background:#ffffff;
+
+    text-decoration:none;
+
+    color:#222;
+
+    border:1px solid #E5E7EB;
+
+    transition:all .25s ease;
+
+    overflow:hidden;
+
+}
+
+.day-card:hover{
+
+    background:#EFF6FF;
+
+    transform:translateY(-3px);
+
+    box-shadow:0 6px 14px rgba(0,0,0,.12);
+
+}
+
+/* ==========================================
+   DATE NUMBER
+========================================== */
+
+.date-number{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#111827;
+
+    margin-bottom:8px;
+
+    line-height:1;
+
+}
+
+/* ==========================================
+   TITHI
+========================================== */
+
+.tithi-text{
+
+    width:100%;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:#2563EB;
+
+    line-height:18px;
+
+    word-wrap:break-word;
+
+    overflow:hidden;
+
+}
+
+/* ==========================================
+   FESTIVAL
+========================================== */
+
+.festival{
+
+    margin-top:auto;
+
+    width:100%;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    color:#D97706;
+
+    line-height:16px;
+
+    word-wrap:break-word;
+
+}
+
+/* ==========================================
+   TODAY
+========================================== */
+
+.day-card.today{
+
+    border:3px solid #16A34A;
+
+}
+
+/* ==========================================
+   SELECTED
+========================================== */
+
+.day-card.selected{
+
+    background:#DBEAFE;
+
+    border:3px solid #2563EB;
+
+}
+
+/* ==========================================
+   OTHER MONTH
+========================================== */
+
+.day-card.other-month{
+
+    background:#F9FAFB;
+
+}
+
+.day-card.other-month .date-number{
+
+    color:#9CA3AF;
+
+}
+
+.day-card.other-month .tithi-text{
+
+    color:#C4C4C4;
+
+}
+
+/* ==========================================
+   EMPTY CELL (Future use)
+========================================== */
+
+.day-card.empty{
+
+    background:#F8FAFC;
+
+}
+
+/* ==========================================
+   FESTIVAL BADGE
+========================================== */
+
+.festival::before{
+
+    content:"🎉 ";
+
+}
+/* ==========================================
+   DETAILS CARD
+========================================== */
+
+.details-card{
+
+    margin-top:30px;
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.details-card h2{
+
+    color:#1E3A8A;
+
+    margin-bottom:20px;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+/* ==========================================
+   DETAILS TABLE
+========================================== */
+
+.details-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.details-table tr{
+
+    border-bottom:1px solid #E5E7EB;
+
+}
+
+.details-table th{
+
+    width:220px;
+
+    text-align:left;
+
+    padding:15px;
+
+    background:#F8FAFC;
+
+    color:#1E3A8A;
+
+    font-weight:600;
+
+}
+
+.details-table td{
+
+    padding:15px;
+
+    color:#374151;
+
+    font-size:15px;
+
+}
+
+.details-table tr:hover{
+
+    background:#F9FAFB;
+
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.calendar-footer{
+
+    margin-top:30px;
+
+    text-align:center;
+
+    color:#6B7280;
+
+    font-size:14px;
+
+    padding:20px;
+
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#F3F4F6;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563EB;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#1D4ED8;
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:1200px){
+
+    .calendar-grid{
+
+        grid-template-columns:repeat(7,1fr);
+
+    }
+
+}
+
+@media(max-width:992px){
+
+    .calendar-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+    .calendar-toolbar{
+
+        flex-direction:column;
+
+        gap:15px;
+
+    }
+
+    .search-bar{
+
+        justify-content:center;
+
+    }
+
+    .search-bar form{
+
+        flex-direction:column;
+
+        width:100%;
+
+    }
+
+    .search-bar input{
+
+        width:100%;
+
+    }
+
+    .search-bar button{
+
+        width:100%;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .calendar-grid{
+
+        grid-template-columns:repeat(7,minmax(70px,1fr));
+
+        overflow-x:auto;
+
+    }
+
+    .day-card{
+
+        min-height:95px;
+
+        padding:8px;
+
+    }
+
+    .date-number{
+
+        font-size:22px;
+
+    }
+
+    .tithi-text{
+
+        font-size:11px;
+
+        line-height:15px;
+
+    }
+
+    .festival{
+
+        font-size:10px;
+
+    }
+
+    .details-table th{
+
+        width:140px;
+
+        font-size:14px;
+
+    }
+
+    .details-table td{
+
+        font-size:14px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .calendar-header h1{
+
+        font-size:22px;
+
+    }
+
+    .month-title{
+
+        font-size:22px;
+
+    }
+
+    .day-name{
+
+        font-size:13px;
+
+        padding:10px;
+
+    }
+
+    .day-card{
+
+        min-height:85px;
+
+    }
+
+    .date-number{
+
+        font-size:18px;
+
+    }
+
+    .tithi-text{
+
+        font-size:10px;
+
+    }
+
+    .festival{
+
+        display:none;
+
+    }
+
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+.day-card{
+
+    animation:fadeIn .35s ease;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+    
+
+}
+.search-bar{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin:25px 0;
+
+}
+
+.search-bar form{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:center;
+
+}
+
+.search-bar input[type="date"]{
+
+    padding:12px 18px;
+
+    border:2px solid #d9d9d9;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    min-width:220px;
+
+    transition:.3s;
+
+}
+
+.search-bar input[type="date"]:focus{
+
+    outline:none;
+
+    border-color:#2e7d32;
+
+    box-shadow:0 0 10px rgba(46,125,50,.25);
+
+}
+.search-btn{
+
+    background:#2e7d32;
+
+    color:#fff;
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.search-btn:hover{
+
+    background:#1b5e20;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 18px rgba(0,0,0,.2);
+
+}
+
+.search-btn i{
+
+    margin-right:6px;
+
+}
+.import-btn{
+
+    background:#1565c0;
+
+    color:#fff;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+.import-btn:hover{
+
+    background:#0d47a1;
+
+    transform:translateY(-2px);
+
+    color:#fff;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.2);
+
+}
+.event-badge{
+
+    margin-top:6px;
+
+    background:#e8f5e9;
+
+    color:#2e7d32;
+
+    border-radius:20px;
+
+    padding:3px 8px;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    text-align:center;
+
+    border:1px solid #a5d6a7;
+
+}

@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/main/webapp/WEB-INF/views/login.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/partials/navbar.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/partials/quick-actions.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/partials/sidebar.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/partials/toast.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/register.jsp=UTF-8
+encoding//src/test/java=UTF-8
+encoding//src/test/resources=UTF-8
+encoding/<project>=UTF-8

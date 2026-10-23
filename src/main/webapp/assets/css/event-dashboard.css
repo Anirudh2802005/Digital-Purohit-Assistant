@@ -1,0 +1,159 @@
+@charset "UTF-8";
+
+/*==========================================================
+                    EVENTS DASHBOARD
+==========================================================*/
+
+.page-header{
+
+    margin-bottom:30px;
+
+}
+
+.page-header h1{
+
+    font-size:32px;
+
+    color:#1F3C88;
+
+    margin-bottom:8px;
+
+}
+
+.page-header p{
+
+    color:#666;
+
+}
+
+/*==========================================================*/
+
+.event-summary{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+    margin-bottom:35px;
+
+}
+
+.summary-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+
+    border-top:5px solid #2C6BED;
+
+    transition:.3s;
+
+}
+
+.summary-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.summary-card h2{
+
+    font-size:36px;
+
+    color:#1F3C88;
+
+    margin-bottom:10px;
+
+}
+
+.summary-card p{
+
+    color:#666;
+
+}
+
+/*==========================================================*/
+
+.event-actions{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:30px;
+
+}
+
+.action-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    color:#333;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.action-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+}
+
+.action-icon{
+
+    font-size:55px;
+
+    margin-bottom:20px;
+
+}
+
+.action-card h3{
+
+    color:#1F3C88;
+
+    margin-bottom:10px;
+
+}
+
+.action-card p{
+
+    color:#777;
+
+}
+
+@media(max-width:992px){
+
+    .event-summary{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .event-actions{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

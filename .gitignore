@@ -1,0 +1,12 @@
+
+# Maven build output
+target/
+
+# Eclipse settings
+.metadata/
+
+# Log files
+*.log
+
+# Local secrets
+.env

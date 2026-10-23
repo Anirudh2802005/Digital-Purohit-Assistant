@@ -1,0 +1,163 @@
+@charset "UTF-8";
+
+/*==========================================================
+                FREQUENT CUSTOMERS
+==========================================================*/
+
+body{
+
+    background:#F4F7FC;
+
+}
+
+/*==========================
+        HEADER
+==========================*/
+
+.page-header{
+
+    background:#1F3C88;
+
+    color:#fff;
+
+    padding:25px 30px;
+
+    border-radius:15px;
+
+    margin-bottom:30px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.page-header h1{
+
+    margin:0;
+
+    font-size:30px;
+
+}
+
+.page-header p{
+
+    margin-top:8px;
+
+    color:#DDE6FF;
+
+}
+
+/*==========================
+        TABLE CARD
+==========================*/
+
+.table-card{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+thead{
+
+    background:#1F3C88;
+
+    color:#ffffff;
+
+}
+
+thead th{
+
+    padding:18px;
+
+    text-align:left;
+
+}
+
+tbody td{
+
+    padding:18px;
+
+    border-bottom:1px solid #EEF2F7;
+
+}
+
+tbody tr:hover{
+
+    background:#F8FBFF;
+
+}
+
+/*==========================
+        BADGE
+==========================*/
+
+.event-count{
+
+    background:#2C6BED;
+
+    color:#fff;
+
+    padding:6px 14px;
+
+    border-radius:20px;
+
+    font-weight:600;
+
+}
+
+/*==========================
+        BUTTON
+==========================*/
+
+.btn-history{
+
+    display:inline-block;
+
+    padding:8px 16px;
+
+    background:#2C6BED;
+
+    color:#fff;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.btn-history:hover{
+
+    background:#1F56D6;
+
+}
+
+/*==========================
+        RESPONSIVE
+==========================*/
+
+@media(max-width:900px){
+
+    table{
+
+        display:block;
+
+        overflow-x:auto;
+
+    }
+
+}

@@ -1,0 +1,285 @@
+@charset "UTF-8";
+
+/* ===========================
+   GOOGLE FONT
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* ===========================
+   PAGE HEADER
+=========================== */
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.page-title{
+    font-size:30px;
+    font-weight:700;
+    color:#1e293b;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.page-title i{
+    color:#2563eb;
+}
+
+.page-subtitle{
+    margin-top:8px;
+    color:#64748b;
+    font-size:15px;
+}
+
+.back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 22px;
+    text-decoration:none;
+    border-radius:10px;
+    background:#e2e8f0;
+    color:#334155;
+    font-weight:600;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:#cbd5e1;
+}
+
+/* ===========================
+   FORM CARD
+=========================== */
+
+.form-card{
+    background:#ffffff;
+    border-radius:18px;
+    padding:35px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    border:1px solid #e2e8f0;
+}
+
+.form-section h2{
+    font-size:22px;
+    color:#1e293b;
+    margin-bottom:25px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.form-section h2 i{
+    color:#2563eb;
+}
+
+/* ===========================
+   FORM GROUP
+=========================== */
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#334155;
+}
+
+.form-group label span{
+    color:#ef4444;
+}
+
+.form-group input,
+.form-group textarea{
+    width:100%;
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    padding:14px 16px;
+    font-size:15px;
+    transition:.3s;
+    background:#fff;
+}
+
+.form-group textarea{
+    resize:vertical;
+    min-height:130px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+}
+
+/* ===========================
+   DATE GRID
+=========================== */
+
+.date-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+/* ===========================
+   BUTTON GROUP
+=========================== */
+
+.button-group{
+    display:flex;
+    justify-content:flex-end;
+    gap:15px;
+    margin-top:35px;
+    padding-top:25px;
+    border-top:1px solid #e2e8f0;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    padding:14px 28px;
+    border-radius:12px;
+    transition:all .3s ease;
+}
+
+.btn i{
+    font-size:15px;
+}
+
+/* ===========================
+   CANCEL BUTTON
+=========================== */
+
+.btn-cancel{
+    background:#f1f5f9;
+    color:#475569;
+    border:1px solid #cbd5e1;
+}
+
+.btn-cancel:hover{
+    background:#e2e8f0;
+    transform:translateY(-2px);
+}
+
+/* ===========================
+   SAVE BUTTON
+=========================== */
+
+.btn-save{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:#fff;
+    box-shadow:0 8px 20px rgba(37,99,235,.25);
+}
+
+.btn-save:hover{
+    background:linear-gradient(135deg,#1d4ed8,#1e40af);
+    transform:translateY(-3px);
+    box-shadow:0 12px 28px rgba(37,99,235,.35);
+}
+
+/* ===========================
+   INPUT HOVER
+=========================== */
+
+.form-group input:hover,
+.form-group textarea:hover{
+    border-color:#94a3b8;
+}
+
+/* ===========================
+   PLACEHOLDER
+=========================== */
+
+::placeholder{
+    color:#94a3b8;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:992px){
+
+    .page-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .back-btn{
+        width:100%;
+        justify-content:center;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .form-card{
+        padding:25px;
+    }
+
+    .date-grid{
+        grid-template-columns:1fr;
+    }
+
+    .button-group{
+        flex-direction:column-reverse;
+    }
+
+    .btn{
+        width:100%;
+    }
+
+    .page-title{
+        font-size:24px;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .main-content{
+        padding:15px;
+    }
+
+    .form-card{
+        padding:18px;
+        border-radius:14px;
+    }
+
+    .page-title{
+        font-size:22px;
+    }
+
+    .page-subtitle{
+        font-size:14px;
+    }
+
+    .form-section h2{
+        font-size:20px;
+    }
+
+}

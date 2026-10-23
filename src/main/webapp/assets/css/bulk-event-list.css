@@ -1,0 +1,571 @@
+/* ======================================================
+   BULK EVENT LIST
+   Digital Purohit Assistant
+====================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* ======================================================
+   MAIN CONTENT
+====================================================== */
+
+.main-content{
+    padding:30px;
+    background:#f5f7fb;
+    min-height:100vh;
+}
+
+/* ======================================================
+   PAGE HEADER
+====================================================== */
+
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.page-title{
+    font-size:34px;
+    font-weight:700;
+    color:#1f2937;
+}
+
+.page-subtitle{
+    margin-top:5px;
+    color:#6b7280;
+}
+
+/* ======================================================
+   ADD BUTTON
+====================================================== */
+
+.add-btn{
+
+    text-decoration:none;
+
+    background:#2563eb;
+
+    color:white;
+
+    padding:12px 22px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.add-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ======================================================
+   SEARCH BAR
+====================================================== */
+
+.search-bar{
+
+    margin-bottom:25px;
+
+}
+
+.search-bar input{
+
+    width:350px;
+
+    max-width:100%;
+
+    padding:12px 16px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:15px;
+
+}
+
+.search-bar input:focus{
+
+    border-color:#2563eb;
+
+}
+
+/* ======================================================
+   SUMMARY CARDS
+====================================================== */
+
+.summary-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:20px;
+
+    margin-bottom:35px;
+
+}
+
+.summary-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+    text-align:center;
+
+}
+
+.summary-card h2{
+
+    color:#2563eb;
+
+    font-size:34px;
+
+    margin-bottom:8px;
+
+}
+
+.summary-card p{
+
+    color:#666;
+
+}
+
+/* ======================================================
+   SECTION TITLE
+====================================================== */
+
+.section-title{
+
+    margin-bottom:20px;
+
+    color:#1f2937;
+
+}
+
+/* ======================================================
+   CARD GRID
+====================================================== */
+
+.card-container{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+
+    gap:25px;
+
+}
+
+/* ======================================================
+   EVENT CARD
+====================================================== */
+
+.event-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.event-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+}
+
+/* ======================================================
+   CARD HEADER
+====================================================== */
+
+.event-header{
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+    color:white;
+
+    padding:18px;
+
+}
+
+.header-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.event-header h3{
+
+    font-size:22px;
+
+    font-weight:600;
+
+}
+
+/* ======================================================
+   STATUS BADGES
+====================================================== */
+
+.badge{
+
+    padding:6px 14px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:600;
+
+}
+
+.active{
+
+    background:#d1fae5;
+
+    color:#065f46;
+
+}
+
+.upcoming{
+
+    background:#fef3c7;
+
+    color:#92400e;
+
+}
+
+.completed{
+
+    background:#e5e7eb;
+
+    color:#374151;
+
+}
+
+/* ======================================================
+   CARD BODY
+====================================================== */
+
+.event-body{
+
+    padding:20px;
+
+}
+
+.event-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.event-row span{
+
+    color:#555;
+
+}
+
+.event-row strong{
+
+    color:#111827;
+
+}
+
+/* ======================================================
+   NOTES
+====================================================== */
+
+.notes{
+
+    margin-top:20px;
+
+    background:#f9fafb;
+
+    padding:12px;
+
+    border-radius:10px;
+
+}
+
+.notes strong{
+
+    display:block;
+
+    margin-bottom:8px;
+
+}
+
+.notes p{
+
+    color:#555;
+
+    line-height:1.6;
+
+}
+
+/* ======================================================
+   FOOTER BUTTONS
+====================================================== */
+
+.event-footer{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:10px;
+
+    padding:20px;
+
+}
+
+.btn{
+
+    text-decoration:none;
+
+    text-align:center;
+
+    padding:10px;
+
+    color:white;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+/* Button Colors */
+
+.details{
+
+    background:#2563eb;
+
+}
+
+.family{
+
+    background:#0ea5e9;
+
+}
+
+.payment{
+
+    background:#8b5cf6;
+
+}
+
+.report{
+
+    background:#10b981;
+
+}
+
+.edit{
+
+    background:#f59e0b;
+
+}
+
+.delete{
+
+    background:#dc2626;
+
+}
+
+/* Hover */
+
+.details:hover{
+
+    background:#1d4ed8;
+
+}
+
+.family:hover{
+
+    background:#0284c7;
+
+}
+
+.payment:hover{
+
+    background:#7c3aed;
+
+}
+
+.report:hover{
+
+    background:#059669;
+
+}
+
+.edit:hover{
+
+    background:#d97706;
+
+}
+
+.delete:hover{
+
+    background:#b91c1c;
+
+}
+
+/* ======================================================
+   EMPTY CARD
+====================================================== */
+
+.empty-card{
+
+    grid-column:1/-1;
+
+    background:white;
+
+    padding:60px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.empty-card h2{
+
+    font-size:60px;
+
+    margin-bottom:15px;
+
+}
+
+.empty-card h3{
+
+    margin-bottom:10px;
+
+}
+
+.empty-card p{
+
+    color:#666;
+
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media(max-width:992px){
+
+.summary-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.page-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.summary-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.card-container{
+
+grid-template-columns:1fr;
+
+}
+
+.event-footer{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:480px){
+
+.event-footer{
+
+grid-template-columns:1fr;
+
+}
+
+.page-title{
+
+font-size:28px;
+
+}
+
+.summary-card h2{
+
+font-size:28px;
+
+}
+.btn-primary{
+    background:#2e7d32;
+    color:#fff;
+    border:none;
+}
+
+.btn-primary:hover{
+    background:#1b5e20;
+}
+}
