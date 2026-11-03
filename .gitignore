@@ -1,12 +1,29 @@
-
-# Maven build output
+# Maven
 target/
 
-# Eclipse settings
-.metadata/
+# Java
+*.class
 
-# Log files
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Logs
 *.log
 
-# Local secrets
+# Environment variables
 .env
+.env.*
+
+# Credentials
+credentials.json
+client_secret.json
+service-account.json
+*.jks
+*.keystore
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini

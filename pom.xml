@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -10,12 +12,12 @@
     <groupId>com.digitalpurohit</groupId>
     <artifactId>Digital_Purohit_Assistant</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
     <packaging>war</packaging>
 
     <name>Digital_Purohit_Assistant</name>
 
     <!-- ================= JAVA VERSION ================= -->
+
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
@@ -23,9 +25,11 @@
     </properties>
 
     <!-- ================= DEPENDENCIES ================= -->
+
     <dependencies>
 
-        <!-- Servlet API - Tomcat provides this -->
+        <!-- Servlet API - Provided by Tomcat 10.1 -->
+
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -34,6 +38,7 @@
         </dependency>
 
         <!-- JSP API -->
+
         <dependency>
             <groupId>jakarta.servlet.jsp</groupId>
             <artifactId>jakarta.servlet.jsp-api</artifactId>
@@ -42,6 +47,7 @@
         </dependency>
 
         <!-- JSTL API -->
+
         <dependency>
             <groupId>jakarta.servlet.jsp.jstl</groupId>
             <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
@@ -49,6 +55,7 @@
         </dependency>
 
         <!-- JSTL Implementation -->
+
         <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>jakarta.servlet.jsp.jstl</artifactId>
@@ -56,38 +63,47 @@
         </dependency>
 
         <!-- MySQL Driver -->
+
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>9.3.0</version>
         </dependency>
 
-        <!-- Gson -->
+        <!-- Gson - Keep only one version -->
+
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.13.1</version>
         </dependency>
 
-<!-- Firebase Admin SDK -->
-<dependency>
-    <groupId>com.google.firebase</groupId>
-    <artifactId>firebase-admin</artifactId>
-    <version>9.7.0</version>
-</dependency>
-<!-- Google API Client - Google Login -->
-<dependency>
-    <groupId>com.google.api-client</groupId>
-    <artifactId>google-api-client</artifactId>
-    <version>2.9.0</version>
-</dependency>
+        <!-- Firebase Admin SDK -->
 
-<dependency>
-    <groupId>com.google.code.gson</groupId>
-    <artifactId>gson</artifactId>
-    <version>2.11.0</version>
-</dependency>
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>9.7.0</version>
+        </dependency>
+
+        <!-- Google API Client - Google Login -->
+
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+        <!-- Google HTTP Client - Gson Support -->
+
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-gson</artifactId>
+            <version>1.46.3</version>
+        </dependency>
+
         <!-- Apache POI -->
+
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -101,6 +117,7 @@
         </dependency>
 
         <!-- Jakarta Mail -->
+
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>jakarta.mail</artifactId>
@@ -108,6 +125,7 @@
         </dependency>
 
         <!-- BCrypt -->
+
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
@@ -115,6 +133,7 @@
         </dependency>
 
         <!-- iText PDF -->
+
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
@@ -124,8 +143,11 @@
     </dependencies>
 
     <!-- ================= BUILD ================= -->
+
     <build>
+
         <finalName>Digital_Purohit_Assistant</finalName>
+
     </build>
 
 </project>

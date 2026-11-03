@@ -1007,3 +1007,209 @@
 }
 
 
+/* =====================================================================
+   NOTIFICATION POPUP — DARK THEME ONLY
+   Light theme is not touched. Selectors are attribute-based
+   ([class*="..."]) so they work with the card markup that
+   notification.js renders, whatever the exact class names are.
+   ===================================================================== */
+
+@keyframes npAurora{
+  0%   { background-position: 0% 0%,   100% 100%, 0 0; }
+  50%  { background-position: 40% 30%, 60% 70%,   0 0; }
+  100% { background-position: 0% 0%,   100% 100%, 0 0; }
+}
+@keyframes npCardIn{ from{ opacity:0; transform:translateY(14px) scale(.98); } to{ opacity:1; transform:none; } }
+@keyframes npDot{ 0%{ box-shadow:0 0 0 0 rgba(43,127,255,.55); } 70%,100%{ box-shadow:0 0 0 8px rgba(43,127,255,0); } }
+@keyframes npShine{ from{ transform:translateX(-120%); } to{ transform:translateX(220%); } }
+
+/* ---------- popup shell: deep dark, slowly moving glow ---------- */
+:root[data-theme="dark"] .notification-popup{
+  background:
+    radial-gradient(520px 280px at 8% 0%,    rgba(66,97,136,.42), transparent 65%),
+    radial-gradient(460px 300px at 100% 100%, rgba(43,127,255,.22), transparent 65%),
+    #0a0e16 !important;
+  background-size:140% 140%, 140% 140%, auto !important;
+  animation:npPopIn .45s cubic-bezier(.2,.8,.2,1) both, npAurora 16s ease-in-out infinite !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  box-shadow:0 40px 110px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.03), 0 0 60px rgba(43,127,255,.10) !important;
+  color:#f5f5f5 !important;
+}
+
+/* ---------- header ---------- */
+:root[data-theme="dark"] .notification-popup-header{
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)) !important;
+  border-bottom:1px solid rgba(255,255,255,.09) !important;
+}
+:root[data-theme="dark"] .notification-popup-header h2{ color:#fff !important; }
+:root[data-theme="dark"] .notification-popup-header p{ color:rgba(255,255,255,.6) !important; }
+
+:root[data-theme="dark"] .notification-actions button{
+  background:rgba(255,255,255,.07) !important;
+  color:#f5f5f5 !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  box-shadow:none !important;
+  backdrop-filter:blur(6px);
+}
+:root[data-theme="dark"] .notification-actions button svg{ stroke:currentColor !important; }
+:root[data-theme="dark"] .notification-actions #markAllRead:hover{
+  background:rgba(43,127,255,.18) !important; border-color:#2b7fff !important; color:#7db2ff !important;
+  box-shadow:0 8px 20px rgba(43,127,255,.25) !important;
+}
+:root[data-theme="dark"] .notification-actions #deleteAllBtn{
+  background:rgba(255,107,107,.10) !important; color:#ff7b7b !important; border-color:rgba(255,107,107,.45) !important;
+}
+:root[data-theme="dark"] .notification-actions #deleteAllBtn:hover{
+  background:#d64545 !important; color:#fff !important; border-color:#d64545 !important;
+  box-shadow:0 8px 20px rgba(214,69,69,.35) !important;
+}
+:root[data-theme="dark"] .notification-actions #closeNotification{
+  width:38px; height:38px; padding:0 !important; border-radius:50% !important;
+  background:rgba(255,255,255,.08) !important; color:#fff !important;
+}
+:root[data-theme="dark"] .notification-actions #closeNotification:hover{
+  background:#d64545 !important; border-color:#d64545 !important; transform:rotate(90deg);
+}
+
+/* ---------- list area: transparent so the glow shows through ---------- */
+:root[data-theme="dark"] .notification-popup #notificationContainer,
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="list"],
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="group"]{
+  background:transparent !important;
+  color:#f5f5f5 !important;
+}
+:root[data-theme="dark"] .notification-popup #notificationContainer{ padding:16px !important; }
+
+/* ---------- each notification card ---------- */
+:root[data-theme="dark"] .notification-popup #notificationContainer > :not(.notification-empty),
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="list"] > *{
+  position:relative; overflow:hidden;
+  background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.03)) !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  border-radius:16px !important;
+  color:#f5f5f5 !important;
+  box-shadow:0 10px 28px rgba(0,0,0,.35) !important;
+  backdrop-filter:blur(8px);
+  animation:npCardIn .5s cubic-bezier(.2,.8,.2,1) both;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s, background-color .25s, box-shadow .25s;
+}
+:root[data-theme="dark"] .notification-popup #notificationContainer > :nth-child(2){ animation-delay:.06s; }
+:root[data-theme="dark"] .notification-popup #notificationContainer > :nth-child(3){ animation-delay:.12s; }
+:root[data-theme="dark"] .notification-popup #notificationContainer > :nth-child(4){ animation-delay:.18s; }
+:root[data-theme="dark"] .notification-popup #notificationContainer > :nth-child(n+5){ animation-delay:.24s; }
+
+/* light sweep across the card on hover */
+:root[data-theme="dark"] .notification-popup #notificationContainer > :not(.notification-empty)::after{
+  content:""; position:absolute; top:0; bottom:0; left:0; width:40%; pointer-events:none;
+  background:linear-gradient(100deg, transparent, rgba(255,255,255,.07), transparent);
+  transform:translateX(-120%);
+}
+@media (hover:hover) and (pointer:fine){
+  :root[data-theme="dark"] .notification-popup #notificationContainer > :not(.notification-empty):hover{
+    transform:translateY(-3px);
+    border-color:rgba(43,127,255,.55) !important;
+    box-shadow:0 16px 36px rgba(0,0,0,.5), 0 0 0 1px rgba(43,127,255,.25) !important;
+  }
+  :root[data-theme="dark"] .notification-popup #notificationContainer > :not(.notification-empty):hover::after{
+    animation:npShine .9s ease;
+  }
+}
+
+/* unread cards get a blue tint and a pulsing dot */
+:root[data-theme="dark"] .notification-popup #notificationContainer .unread,
+:root[data-theme="dark"] .notification-popup #notificationContainer .is-unread,
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="unread"]{
+  background:linear-gradient(135deg, rgba(43,127,255,.20), rgba(43,127,255,.06)) !important;
+  border-color:rgba(43,127,255,.45) !important;
+}
+
+/* ---------- text inside cards (this is what was invisible) ---------- */
+:root[data-theme="dark"] .notification-popup #notificationContainer h1,
+:root[data-theme="dark"] .notification-popup #notificationContainer h2,
+:root[data-theme="dark"] .notification-popup #notificationContainer h3,
+:root[data-theme="dark"] .notification-popup #notificationContainer h4,
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="title"]{
+  color:#ffffff !important; font-weight:700 !important; opacity:1 !important;
+}
+:root[data-theme="dark"] .notification-popup #notificationContainer p,
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="message"],
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="desc"],
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="text"]{
+  color:rgba(255,255,255,.78) !important; opacity:1 !important;
+}
+:root[data-theme="dark"] .notification-popup #notificationContainer small,
+:root[data-theme="dark"] .notification-popup #notificationContainer time,
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="time"],
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="date"],
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="ago"]{
+  color:rgba(255,255,255,.55) !important; opacity:1 !important;
+}
+
+/* divider between content and the right-hand column */
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="side"],
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="meta"],
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="right"]{
+  border-color:rgba(255,255,255,.10) !important;
+  background:transparent !important;
+}
+
+/* ---------- icon tile ---------- */
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="icon"]{
+  background:rgba(43,127,255,.18) !important;
+  color:#7db2ff !important;
+  border:1px solid rgba(43,127,255,.30) !important;
+  border-radius:12px !important;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), background-color .2s, color .2s;
+}
+:root[data-theme="dark"] .notification-popup #notificationContainer > *:hover [class*="icon"]{
+  background:#2b7fff !important; color:#fff !important; transform:rotate(-8deg) scale(1.08);
+}
+
+/* ---------- type badge (PROFILE etc.) ---------- */
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="badge"],
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="tag"],
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="chip"],
+:root[data-theme="dark"] .notification-popup #notificationContainer [class*="category"]{
+  background:rgba(43,127,255,.16) !important;
+  color:#8dbcff !important;
+  border:1px solid rgba(43,127,255,.30) !important;
+}
+
+/* ---------- per-card buttons (delete / mark read) ---------- */
+:root[data-theme="dark"] .notification-popup #notificationContainer button{
+  background:rgba(255,107,107,.12) !important;
+  color:#ff7b7b !important;
+  border:1px solid rgba(255,107,107,.30) !important;
+  border-radius:11px !important;
+  transition:background-color .2s, color .2s, transform .15s, box-shadow .2s;
+}
+:root[data-theme="dark"] .notification-popup #notificationContainer button:hover{
+  background:#d64545 !important; color:#fff !important; box-shadow:0 8px 18px rgba(214,69,69,.35) !important;
+}
+:root[data-theme="dark"] .notification-popup #notificationContainer button:active{ transform:scale(.92); }
+:root[data-theme="dark"] .notification-popup #notificationContainer button svg,
+:root[data-theme="dark"] .notification-popup #notificationContainer button i{ color:inherit !important; }
+
+/* ---------- empty / loading ---------- */
+:root[data-theme="dark"] .notification-empty{ color:rgba(255,255,255,.6) !important; }
+
+/* ---------- footer ---------- */
+:root[data-theme="dark"] .notification-footer{
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  background:linear-gradient(0deg, rgba(255,255,255,.05), rgba(255,255,255,0)) !important;
+  border-top:1px solid rgba(255,255,255,.09) !important;
+  color:rgba(255,255,255,.6) !important;
+}
+:root[data-theme="dark"] .notification-footer strong{ color:#fff !important; background:rgba(43,127,255,.22) !important; }
+:root[data-theme="dark"] .notification-footer .view-all-link{ color:#7db2ff !important; }
+
+/* ---------- scrollbar ---------- */
+:root[data-theme="dark"] .notification-popup #notificationContainer{
+  scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.22) transparent;
+}
+
+@media (prefers-reduced-motion: reduce){
+  :root[data-theme="dark"] .notification-popup,
+  :root[data-theme="dark"] .notification-popup #notificationContainer > *{ animation:none !important; }
+}
+

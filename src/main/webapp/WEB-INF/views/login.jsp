@@ -243,7 +243,6 @@ button { font-family: inherit; }
     max-width: 430px;
     margin: 0 auto;
     transition: transform .15s ease-out;
-    transform-style: preserve-3d;
 }
 
 .card h2 {
@@ -289,7 +288,19 @@ button { font-family: inherit; }
     40%, 60% { transform: translateX(4px); }
 }
 
-/* Google sign-in link */
+/* Google sign-in */
+.google-note {
+    margin-top: 10px;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    color: #8a5a00;
+    background: #fff6e0;
+    border: 1px solid #f1dca6;
+    border-radius: 6px;
+}
+
+.google-login-wrapper { min-height: 44px; }
+
 .google-btn {
     display: flex;
     align-items: center;
@@ -574,35 +585,91 @@ button { font-family: inherit; }
 
                 <h2>Log in to <span class="accent">continue</span></h2>
                 <p class="lead">
-                    Use your email and password to access your account.
+                    Continue with Google, or use your email and password.
                 </p>
 
-                <!-- Error message from the login servlet -->
-                <%
-                    String errorMessage =
-                        (String) request.getAttribute("errorMessage");
+                <!-- Error message from the login servlet / Google servlet -->
+             <%
+    String errorMessage =
+        (String) request.getAttribute("errorMessage");
 
-                    if (errorMessage != null &&
-                        !errorMessage.trim().isEmpty()) {
-                %>
-                    <div class="error-message" role="alert">
-                     <%= errorMessage %>
-                    </div>
-                <%
-                    }
-                %>
+    if (errorMessage == null || errorMessage.trim().isEmpty()) {
+        String code = request.getParameter("error");
 
-                <!-- Google button: configure its real endpoint before use -->
-                <a class="google-btn"
-                   href="${pageContext.request.contextPath}/auth/google">
-                    <svg viewBox="0 0 48 48" aria-hidden="true">
-                        <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/>
-                        <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/>
-                        <path fill="#FBBC05" d="M10.5 28.7c-.5-1.5-.8-3.1-.8-4.7s.3-3.2.8-4.7l-7.9-6.1C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.9-6.1z"/>
-                        <path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/>
-                    </svg>
-                    Continue with Google
-                </a>
+        if ("google_failed".equals(code)
+                || "google_invalid_token".equals(code)) {
+            errorMessage =
+                "Google sign-in failed. Please try again.";
+
+        } else if ("google_csrf".equals(code)) {
+            errorMessage =
+                "Google sign-in could not be verified. Please try again.";
+
+        } else if ("google_unverified".equals(code)) {
+            errorMessage =
+                "Your Google email address is not verified.";
+
+        } else if ("google_not_registered".equals(code)) {
+            errorMessage =
+                "No admin account is registered with this Google email.";
+
+        } else if ("google_client_id_mismatch".equals(code)) {
+            errorMessage =
+                "Google configuration mismatch. Check your Client ID.";
+
+        } else if ("google_missing_credential".equals(code)) {
+            errorMessage =
+                "Google did not return a login credential. Please try again.";
+
+        } else if ("google_invalid_issuer".equals(code)
+                || "google_invalid_expiration".equals(code)
+                || "google_token_expired".equals(code)) {
+            errorMessage =
+                "Google authentication could not be verified. Please try again.";
+
+        } else if ("google_email_missing".equals(code)) {
+            errorMessage =
+                "Google did not provide an email address.";
+
+        } else if ("google_interrupted".equals(code)) {
+            errorMessage =
+                "Google sign-in was interrupted. Please try again.";
+        }
+    }
+
+    if (errorMessage != null && !errorMessage.trim().isEmpty()) {
+        String safeMessage = errorMessage
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("\"", "&quot;");
+%>
+    <div class="error-message" role="alert">
+        <%= safeMessage %>
+    </div>
+<%
+    }
+%>
+
+                <!-- Direct Google sign-in. The email/password login below stays as an alternative. -->
+<%
+    String googleClientId = "270644021286-e9sikomura4stu09satp0qq3ct1kag7d.apps.googleusercontent.com";
+
+    /* Google needs the full address of the endpoint that receives the sign-in */
+    String scheme = request.getScheme();
+    int port = request.getServerPort();
+    boolean defaultPort = ("http".equals(scheme) && port == 80) || ("https".equals(scheme) && port == 443);
+    String googleLoginUri = scheme + "://" + request.getServerName()
+            + (defaultPort ? "" : ":" + port)
+            + request.getContextPath() + "/auth/google";
+%>
+
+<div class="google-login-wrapper" id="googleWrap" style="width:100%; margin:0 auto; display:flex; justify-content:center;">
+    <div id="googleBtn"></div>
+</div>
+<div class="google-note" id="googleNote" role="status" hidden>
+    Google sign-in could not be loaded. Check your connection, or use your email and password below.
+</div>
 
                 <div class="divider">or with email</div>
 
@@ -697,6 +764,51 @@ button { font-family: inherit; }
 </div>
 
 <script>
+var GOOGLE_CFG = {
+    clientId: "<%= googleClientId %>",
+    loginUri: "<%= googleLoginUri %>"
+};
+
+/* Called by the Google library when it has loaded */
+function initGoogleSignIn() {
+    if (!window.google || !google.accounts || !google.accounts.id) { return; }
+
+    var note = document.getElementById('googleNote');
+    var wrap = document.getElementById('googleWrap');
+    note.hidden = true;
+
+    google.accounts.id.initialize({
+        client_id: GOOGLE_CFG.clientId,
+        login_uri: GOOGLE_CFG.loginUri,
+        ux_mode: 'redirect',
+        auto_select: false
+    });
+
+    /* the button width follows the card, so it never overflows on small phones */
+    var width = Math.max(200, Math.min(360, wrap.clientWidth || 360));
+    google.accounts.id.renderButton(document.getElementById('googleBtn'), {
+        type: 'standard',
+        theme: 'outline',
+        size: 'large',
+        text: 'continue_with',
+        shape: 'rectangular',
+        width: width
+    });
+}
+
+function googleLoadFailed() {
+    document.getElementById('googleNote').hidden = false;
+}
+
+/* if the library never arrives (offline, blocked), tell the user instead of showing nothing */
+setTimeout(function () {
+    if (!(window.google && google.accounts && google.accounts.id)) { googleLoadFailed(); }
+}, 6000);
+</script>
+<script src="https://accounts.google.com/gsi/client" async defer
+        onload="initGoogleSignIn()" onerror="googleLoadFailed()"></script>
+
+<script>
 (function () {
     // Show / hide password
     var toggle = document.getElementById('togglePassword');
@@ -741,8 +853,17 @@ button { font-family: inherit; }
         var card = document.getElementById('card');
         var stage = document.getElementById('stage');
 
+        var overGoogle = false;
+        var googleWrap = document.getElementById('googleWrap');
+        googleWrap.addEventListener('mouseenter', function () {
+            overGoogle = true;
+            card.style.transform = 'none';
+        });
+        googleWrap.addEventListener('mouseleave', function () { overGoogle = false; });
+
         stage.addEventListener('mousemove', function (event) {
             spotlight.style.opacity = 1;
+            if (overGoogle) { return; }
             spotlight.style.left = event.clientX + 'px';
             spotlight.style.top = event.clientY + 'px';
 
@@ -762,7 +883,23 @@ button { font-family: inherit; }
         });
     }
 })();
-</script>
 
+</script>
+<script>
+(function () {
+
+    // Revalidate the login page when restored using
+    // the browser Back or Forward buttons.
+
+    window.addEventListener("pageshow", function (event) {
+
+        if (event.persisted) {
+            window.location.reload();
+        }
+
+    });
+
+})();
+</script>
 </body>
 </html>

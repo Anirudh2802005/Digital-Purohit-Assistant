@@ -118,7 +118,7 @@ public class BulkEventFamiliesServlet extends HttpServlet {
         request.setAttribute("keyword", keyword);
 
         request.getRequestDispatcher(
-                "/WEB-INF/views/bulk-event/bulk-event-family-list.jsp")
+                "/WEB-INF/views/bulk-event/bulk-event-families.jsp")
                 .forward(request, response);
 
     }

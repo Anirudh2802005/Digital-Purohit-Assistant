@@ -2,7 +2,6 @@ package com.digitalpurohit.controller;
 
 import java.io.IOException;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,19 +14,30 @@ public class LogoutServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(
+            HttpServletRequest request,
+            HttpServletResponse response)
+            throws IOException {
 
+        // PREVENT CACHING
+        response.setHeader(
+            "Cache-Control",
+            "no-store, no-cache, must-revalidate, private"
+        );
+
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
+        // INVALIDATE SESSION
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-
             session.invalidate();
-
         }
 
+        // REDIRECT TO LOGIN
         response.sendRedirect(
-                request.getContextPath() + "/login");
+            request.getContextPath() + "/login?logout=success"
+        );
     }
 }

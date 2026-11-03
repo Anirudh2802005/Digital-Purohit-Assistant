@@ -1,6 +1,5 @@
 package com.digitalpurohit.controller;
 
-import com.digitalpurohit.service.ReminderScheduler;
 import java.io.IOException;
 
 import com.digitalpurohit.model.Admin;
@@ -22,213 +21,148 @@ public class LoginServlet extends HttpServlet {
 
     private AdminDAO adminDAO;
 
-
     @Override
     public void init() {
-
         adminDAO = new AdminDAOImpl();
     }
 
+    private void preventCache(HttpServletResponse response) {
+        response.setHeader(
+            "Cache-Control",
+            "no-store, no-cache, must-revalidate, private"
+        );
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+    }
 
-    // =========================================================
     // GET - LOGIN PAGE
-    // =========================================================
-
     @Override
     protected void doGet(
             HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
 
+        preventCache(response);
+
+        // If admin is already logged in, do not show login page.
+        HttpSession session = request.getSession(false);
+
+        if (session != null &&
+                session.getAttribute("adminId") != null) {
+
+            response.sendRedirect(
+                request.getContextPath() + "/dashboard"
+            );
+            return;
+        }
+
         request.getRequestDispatcher(
-                "/WEB-INF/views/login.jsp")
-                .forward(request, response);
+            "/WEB-INF/views/login.jsp"
+        ).forward(request, response);
     }
 
-
-    // =========================================================
-    // POST - EMAIL + PASSWORD LOGIN
-    // =========================================================
-
+    // POST - EMAIL AND PASSWORD LOGIN
     @Override
     protected void doPost(
             HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
 
+        preventCache(response);
 
-        String email =
-                request.getParameter("email");
+        System.out.println(
+            "========== LOGIN SERVLET POST CALLED =========="
+        );
 
-        String password =
-                request.getParameter("password");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
-
-        // =====================================================
         // VALIDATION
-        // =====================================================
-
-        if (email == null ||
-            email.trim().isEmpty() ||
-            password == null ||
-            password.isEmpty()) {
+        if (email == null || email.trim().isEmpty()
+                || password == null || password.isEmpty()) {
 
             request.setAttribute(
-                    "errorMessage",
-                    "Email and Password are required");
+                "errorMessage",
+                "Email and Password are required"
+            );
 
             request.getRequestDispatcher(
-                    "/WEB-INF/views/login.jsp")
-                    .forward(request, response);
+                "/WEB-INF/views/login.jsp"
+            ).forward(request, response);
 
             return;
         }
 
+        email = email.trim().toLowerCase();
 
-        email =
-                email.trim().toLowerCase();
+        // FIND ADMIN
+        Admin admin = adminDAO.getAdminByEmail(email);
 
-
-        // =====================================================
-        // FIND ADMIN BY EMAIL
-        // =====================================================
-
-        Admin admin =
-                adminDAO.getAdminByEmail(email);
-
-
-        // =====================================================
         // VERIFY PASSWORD
-        // =====================================================
-
         boolean valid = false;
 
-
-        if (admin != null &&
-            admin.getPassword() != null) {
-
-            valid =
-                    PasswordUtil.verifyPassword(
-                            password,
-                            admin.getPassword());
+        if (admin != null && admin.getPassword() != null) {
+            valid = PasswordUtil.verifyPassword(
+                password,
+                admin.getPassword()
+            );
         }
 
-
-        // =====================================================
         // INVALID LOGIN
-        // =====================================================
-
         if (!valid) {
 
             request.setAttribute(
-                    "errorMessage",
-                    "Invalid Email or Password");
+                "errorMessage",
+                "Invalid Email or Password"
+            );
 
             request.getRequestDispatcher(
-                    "/WEB-INF/views/login.jsp")
-                    .forward(request, response);
+                "/WEB-INF/views/login.jsp"
+            ).forward(request, response);
 
             return;
         }
 
-
-        // =====================================================
-        // REMOVE OLD SESSION
-        // =====================================================
-
-        HttpSession oldSession =
-                request.getSession(false);
-
+        // INVALIDATE PREVIOUS SESSION
+        HttpSession oldSession = request.getSession(false);
 
         if (oldSession != null) {
-
             oldSession.invalidate();
         }
 
+        // CREATE A FRESH SESSION
+        HttpSession session = request.getSession(true);
 
-        // =====================================================
-        // CREATE NEW SESSION
-        // =====================================================
+        // SESSION TIMEOUT: 30 MINUTES
+        session.setMaxInactiveInterval(30 * 60);
 
-        HttpSession session =
-                request.getSession(true);
+        // ADMIN DETAILS
+        session.setAttribute("adminId", admin.getAdminId());
+        session.setAttribute("adminName", admin.getName());
+        session.setAttribute("adminUsername", admin.getUsername());
+        session.setAttribute("adminEmail", admin.getEmail());
+        session.setAttribute("adminPhone", admin.getPhone());
 
-
-        // =====================================================
-        // ADMIN INFORMATION
-        // =====================================================
-
-        session.setAttribute(
-                "adminId",
-                admin.getAdminId());
-
-        session.setAttribute(
-                "adminName",
-                admin.getName());
-
-        session.setAttribute(
-                "adminUsername",
-                admin.getUsername());
-
-        session.setAttribute(
-                "adminEmail",
-                admin.getEmail());
-
-        session.setAttribute(
-                "adminPhone",
-                admin.getPhone());
-
-
-        // =====================================================
         // PROFILE IMAGE
-        // =====================================================
-
-        if (admin.getProfileImage() != null &&
-            !admin.getProfileImage()
-                 .trim()
-                 .isEmpty()) {
+        if (admin.getProfileImage() != null
+                && !admin.getProfileImage().trim().isEmpty()) {
 
             session.setAttribute(
-                    "profileImage",
-                    admin.getProfileImage());
-
-        } else {
-
-            session.removeAttribute(
-                    "profileImage");
+                "profileImage",
+                admin.getProfileImage()
+            );
         }
 
-
-        // =====================================================
         // LOGIN TYPE
-        // =====================================================
+        session.setAttribute("loginType", "EMAIL");
 
-        session.setAttribute(
-                "loginType",
-                "EMAIL");
+        System.out.println(
+            "Admin login successful: " + admin.getAdminId()
+        );
 
-
-        // =====================================================
-        // RUN REMINDER ENGINE
-        // =====================================================
-
-        try {
-
-            ReminderScheduler.runForAdmin(
-                    admin.getAdminId());
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-
-        // =====================================================
-        // DASHBOARD
-        // =====================================================
-
+        // REDIRECT TO DASHBOARD
         response.sendRedirect(
-                request.getContextPath()
-                + "/dashboard");
+            request.getContextPath() + "/dashboard"
+        );
     }
 }
