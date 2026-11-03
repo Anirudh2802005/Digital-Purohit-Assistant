@@ -27,3 +27,6 @@ service-account.json
 .DS_Store
 Thumbs.db
 desktop.ini
+
+
+/src/main/resources/firebase/serviceAccountKey.json
