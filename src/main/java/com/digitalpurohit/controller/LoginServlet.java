@@ -98,8 +98,43 @@ public class LoginServlet extends HttpServlet {
         // FIND ADMIN
         Admin admin = adminDAO.getAdminByEmail(email);
 
-        // VERIFY PASSWORD
+        System.out.println("LOGIN DEBUG: Email received = " + email);
+        System.out.println("LOGIN DEBUG: Admin found = " + (admin != null));
+
         boolean valid = false;
+
+        if (admin != null && admin.getPassword() != null) {
+
+            System.out.println(
+                "LOGIN DEBUG: Stored hash length = "
+                + admin.getPassword().length()
+            );
+
+            System.out.println(
+                "LOGIN DEBUG: BCrypt hash format = "
+                + admin.getPassword().startsWith("$2")
+            );
+
+            try {
+                valid = PasswordUtil.verifyPassword(
+                    password,
+                    admin.getPassword()
+                );
+
+                System.out.println(
+                    "LOGIN DEBUG: Password verified = " + valid
+                );
+
+            } catch (Exception e) {
+                System.out.println("LOGIN DEBUG: BCrypt verification failed");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("LOGIN DEBUG: Admin or password hash is missing");
+        }
+
+        // VERIFY PASSWORD
+         valid = false;
 
         if (admin != null && admin.getPassword() != null) {
             valid = PasswordUtil.verifyPassword(
