@@ -656,10 +656,24 @@ button { font-family: inherit; }
     String googleClientId = "270644021286-e9sikomura4stu09satp0qq3ct1kag7d.apps.googleusercontent.com";
 
     /* Google needs the full address of the endpoint that receives the sign-in */
-    String scheme = request.getScheme();
+   String forwardedProto = request.getHeader("X-Forwarded-Proto");
+
+String scheme;
+
+if (forwardedProto != null && !forwardedProto.isBlank()) {
+    scheme = forwardedProto.split(",")[0].trim();
+} else {
+    scheme = request.getScheme();
+}
+
+String googleLoginUri =
+        scheme + "://"
+        + request.getServerName()
+        + request.getContextPath()
+        + "/auth/google";
     int port = request.getServerPort();
     boolean defaultPort = ("http".equals(scheme) && port == 80) || ("https".equals(scheme) && port == 443);
-    String googleLoginUri = scheme + "://" + request.getServerName()
+    googleLoginUri = scheme + "://" + request.getServerName()
             + (defaultPort ? "" : ":" + port)
             + request.getContextPath() + "/auth/google";
 %>
