@@ -30,3 +30,9 @@ desktop.ini
 
 
 /src/main/resources/firebase/serviceAccountKey.json
+# Database backups and Aiven certificate
+*.sql
+ca.pem
+
+# Allow example environment file
+!.env.example
