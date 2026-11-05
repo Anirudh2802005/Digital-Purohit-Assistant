@@ -652,31 +652,47 @@ button { font-family: inherit; }
 %>
 
                 <!-- Direct Google sign-in. The email/password login below stays as an alternative. -->
+
 <%
     String googleClientId = "270644021286-e9sikomura4stu09satp0qq3ct1kag7d.apps.googleusercontent.com";
 
-    /* Google needs the full address of the endpoint that receives the sign-in */
-   String forwardedProto = request.getHeader("X-Forwarded-Proto");
+    String forwardedProto = request.getHeader("X-Forwarded-Proto");
+    String forwardedHost = request.getHeader("X-Forwarded-Host");
 
-String scheme;
+    String googleLoginUri;
 
-if (forwardedProto != null && !forwardedProto.isBlank()) {
-    scheme = forwardedProto.split(",")[0].trim();
-} else {
-    scheme = request.getScheme();
-}
+    if (forwardedProto != null && !forwardedProto.isBlank()) {
 
-String googleLoginUri =
-        scheme + "://"
-        + request.getServerName()
-        + request.getContextPath()
-        + "/auth/google";
-    int port = request.getServerPort();
-    boolean defaultPort = ("http".equals(scheme) && port == 80) || ("https".equals(scheme) && port == 443);
-    googleLoginUri = scheme + "://" + request.getServerName()
-            + (defaultPort ? "" : ":" + port)
-            + request.getContextPath() + "/auth/google";
+        String scheme = forwardedProto.split(",")[0].trim();
+
+        String host = (forwardedHost != null && !forwardedHost.isBlank())
+                ? forwardedHost.split(",")[0].trim()
+                : request.getServerName();
+
+        // Remove Render's internal port 80 when using HTTPS
+        if ("https".equalsIgnoreCase(scheme) && host.endsWith(":80")) {
+            host = host.substring(0, host.length() - 3);
+        }
+
+        googleLoginUri = scheme + "://" + host
+                + request.getContextPath() + "/auth/google";
+
+    } else {
+
+        // Preserve localhost:8080 for Eclipse
+        String scheme = request.getScheme();
+        int port = request.getServerPort();
+
+        boolean defaultPort =
+                ("http".equalsIgnoreCase(scheme) && port == 80)
+                || ("https".equalsIgnoreCase(scheme) && port == 443);
+
+        googleLoginUri = scheme + "://" + request.getServerName()
+                + (defaultPort ? "" : ":" + port)
+                + request.getContextPath() + "/auth/google";
+    }
 %>
+
 
 <div class="google-login-wrapper" id="googleWrap" style="width:100%; margin:0 auto; display:flex; justify-content:center;">
     <div id="googleBtn"></div>
